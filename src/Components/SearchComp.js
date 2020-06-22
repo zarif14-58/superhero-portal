@@ -10,6 +10,7 @@ class Search extends Component {
         }
         this.handleChange = this.handleChange.bind(this)
         this.handleSubmit = this.handleSubmit.bind(this)
+        this.fetchChars = this.fetchChars.bind(this)
     }
 
     handleChange(event){
@@ -21,6 +22,35 @@ class Search extends Component {
     handleSubmit(event){
         console.log(this.state.value)
         event.preventDefault()
+        this.fetchChars()
+    }
+
+    fetchChars(){
+        const proxy = "https://cors-anywhere.herokuapp.com/";
+        
+        fetch(`${proxy}https://superheroapi.com/api/3155967971130627/search/` + this.state.value)
+            .then(res => {
+                if (res.ok) {
+                return res;
+                }   else {
+                var error = new Error('Error ' + res.status + ': ' + res.statusText);
+                error.response = res;
+                throw error;
+                }
+            },
+            error => {
+                    throw error;
+            })
+            .then(res => res.json())
+            .then(data => {
+                console.log(data)
+                if(data.response === "error"){
+                    alert("Ooops!")
+                }
+                
+            })
+            .catch(err => alert("Something went wrong"))
+            
     }
 
     render(){
