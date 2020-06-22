@@ -1,12 +1,14 @@
 import React, {Component} from 'react'
 import { Form, FormGroup, Input, Col, Button } from 'reactstrap';
+import Result from './ResultComp'
 
 class Search extends Component {
 
     constructor(props){
         super(props)
         this.state = {
-            value: ''
+            value: "",
+            dataObj: {}
         }
         this.handleChange = this.handleChange.bind(this)
         this.handleSubmit = this.handleSubmit.bind(this)
@@ -47,32 +49,44 @@ class Search extends Component {
                 if(data.response === "error"){
                     alert("Ooops!")
                 }
+                else{
+                    this.setState({
+                        dataObj: data
+                    })
+                    console.log(this.state.dataObj.results)
+                }
                 
             })
             .catch(err => alert("Something went wrong"))
             
     }
 
+
     render(){
         return(
-            <Form onSubmit={this.handleSubmit}>
-                <FormGroup row className="justify-content-center">
-                    <Col md={7}>
-                        <Input type="text" 
-                        name="search" id="search" 
-                        placeholder="Search A Character By Name" 
-                        className="text-center"
-                        value={this.state.value}
-                        onChange={this.handleChange} 
-                    />
-                    </Col>
-                </FormGroup>
-                <FormGroup row className="justify-content-center">
-                    <Col md={{size: 7, offset: 6}}>
-                        <Button color="info">Search</Button>
-                    </Col>
-                </FormGroup>
-             </Form>
+            <React.Fragment>
+                <Form onSubmit={this.handleSubmit}>
+                    <FormGroup row className="justify-content-center">
+                        <Col md={7}>
+                            <Input type="text" 
+                            name="search" id="search" 
+                            placeholder="Search A Character By Name" 
+                            className="text-center"
+                            value={this.state.value}
+                            onChange={this.handleChange} 
+                        />
+                        </Col>
+                    </FormGroup>
+                    <FormGroup row className="justify-content-center">
+                        <Col md={{size: 7, offset: 6}}>
+                            <Button color="info">Search</Button>
+                        </Col>
+                    </FormGroup>
+                </Form>
+                <div>
+                    <Result data={this.state.dataObj.results} />
+                </div>
+             </React.Fragment>
         )
     }
 }

@@ -1,11 +1,11 @@
 import React from 'react';
 import './App.css';
-import Main from './Components/MainComp'
+import Menu from './Components/MenuComp'
 
 function App() {
   return (
     <div className="App">
-      <Main />
+      <Menu />
     </div>
   );
 }
