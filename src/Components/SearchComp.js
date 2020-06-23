@@ -53,7 +53,7 @@ class Search extends Component {
             .then(data => {
                 console.log(data)
                 if(data.response === "error"){
-                    alert("Ooops!")
+                    alert("Ooops! Character not found! Check your spelling, or search Google :'(. Tip: It is Spider-Man, not Spider Man.")
                 }
                 else{
                     this.setState({
