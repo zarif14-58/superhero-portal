@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
 import { Form, FormGroup, Input, Col, Button } from 'reactstrap';
 import Result from './ResultComp'
+import Loader from './LoaderComp'
 
 class Search extends Component {
 
@@ -8,7 +9,8 @@ class Search extends Component {
         super(props)
         this.state = {
             value: "",
-            dataObj: {}
+            dataObj: {},
+            loading: 1
         }
         this.handleChange = this.handleChange.bind(this)
         this.handleSubmit = this.handleSubmit.bind(this)
@@ -22,9 +24,13 @@ class Search extends Component {
     }
 
     handleSubmit(event){
+        this.setState({
+            loading: 2
+        })
         console.log(this.state.value)
         event.preventDefault()
         this.fetchChars()
+        this.renderResult()
     }
 
     fetchChars(){
@@ -51,7 +57,8 @@ class Search extends Component {
                 }
                 else{
                     this.setState({
-                        dataObj: data
+                        dataObj: data,
+                        loading: 3
                     })
                     console.log(this.state.dataObj.results)
                 }
@@ -59,6 +66,24 @@ class Search extends Component {
             })
             .catch(err => alert("Something went wrong"))
             
+    }
+
+    renderResult(){
+        if(this.state.loading === 1){
+            return(
+                <div></div>
+            )
+        }
+        else if(this.state.loading === 2){
+            return(
+                <Loader />
+            )
+        }
+        else if(this.state.loading === 3){
+            return(
+                <Result data={this.state.dataObj}/>
+            )
+        }
     }
 
 
@@ -84,11 +109,12 @@ class Search extends Component {
                     </FormGroup>
                 </Form>
                 <div>
-                    <Result data={this.state.dataObj.results} />
+                    {this.renderResult()}
                 </div>
              </React.Fragment>
         )
     }
 }
+
 
 export default Search
