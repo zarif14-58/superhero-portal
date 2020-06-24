@@ -121,7 +121,7 @@ class Result extends Component {
             <React.Fragment>
                 <Modal size="lg" style={{maxWidth: '1600px', width: '90%'}} isOpen={this.state.isModalOpen} toggle={this.toggleModal}>
                     <ModalHeader toggle={this.toggleModal} style={{fontFamily: "Bangers"}}>Character Info. (CLICK RESPECTIVE BUTTONS TO SEE INFO.)</ModalHeader>
-                    <ModalBody>
+                    <ModalBody className="bg-dark">
                             <Button color="warning" onClick={this.handleApp} style={{fontFamily: "Bangers"}}>Appearance</Button>
                             <Button color="warning" onClick={this.handleBio} style={{fontFamily: "Bangers"}}>Biography</Button>
                             <Button color="warning" onClick={this.handleStat} style={{fontFamily: "Bangers"}}>Powerstats</Button>
